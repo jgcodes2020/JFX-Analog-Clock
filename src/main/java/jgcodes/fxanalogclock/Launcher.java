@@ -6,12 +6,18 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import java.net.URL;
 
 public class Launcher extends Application {
   public static void main(String[] args) {
     launch(args);
+  }
+  
+  public static URL getResource(String name) {
+    return Thread.currentThread().getContextClassLoader().getResource(name);
   }
   
   @Override
@@ -29,10 +35,16 @@ public class Launcher extends Application {
     Scene scene = new Scene(sp, 300, 300);
     stage.setScene(scene);
     
+    stage.getIcons().addAll(
+      new Image(getResource("clock-big.png").toString()),
+      new Image(getResource("clock-64.png").toString()),
+      new Image(getResource("clock-32.png").toString()),
+      new Image(getResource("clock-16.png").toString())
+    );
     
-    stage.setTitle("JFX analog clock");
+    stage.setTitle("JavaFX Analog Clock");
     stage.show();
-    stage.setFullScreenExitHint("Hit F11 or Escape to exit");
+    stage.setFullScreenExitHint("Hit F11 or Escape to exit fullscreen");
     scene.setOnKeyPressed(event -> {
       switch (event.getCode()) {
         case F11 -> stage.setFullScreen(!stage.isFullScreen());
